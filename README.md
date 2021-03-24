@@ -4,7 +4,7 @@
 
 - TrabalhoQuiz - JFrame Quiz
 
-- ProgressBar - JFrame Barra de Progresso
+- ProgressCar - JFrame Barra de Progresso
 
 - Maki_Sushinho - JFrame Sistema de seleção de itens
 
@@ -12,14 +12,14 @@
 
 ### Imagens
 
-- Carro
-- Livro
-- Icone do Git
-- Icone do Java
-- Chapéu de Graduação
-- Icone DevOps
-- Check
-- Error
-- Emoji Triste
-- Emoji Feliz
-- PC
+- Carro - ProgressCar
+- Livro - TrabalhoQuiz
+- Icone do Git - TrabalhoQuiz
+- Icone do Java - TrabalhoQuiz
+- Chapéu de Graduação - AverageCalculator
+- Icone DevOps - TrabalhoQuiz
+- Check - Maki_Sushinho
+- Error - Maki_Sushinho
+- Emoji Triste - AverageCalculator
+- Emoji Feliz - AverageCalculator
+- PC - TrabalhoQuiz
