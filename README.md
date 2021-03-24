@@ -13,7 +13,5 @@
 ### Imagens
 
 - Carro
-
 - Livro
-
 - Icone do Git
