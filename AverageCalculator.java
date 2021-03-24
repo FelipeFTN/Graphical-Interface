@@ -18,14 +18,14 @@ public class FirstProgram2 extends JPanel{
 		EventScript();	
 	}
 	
-	//Instânciar
+	//InstÃ¢nciar
 	public void Componentes() {
 		setLayout(null);
 		textName = new JLabel("Nome:");
 		nameField = new JTextField(15);
 		logoImg = new ImageIcon("C:/Users/FelipeTT/Desktop/Java/Images/graduation-hat.png");
 		logo = new JLabel(logoImg);
-		textNumber = new JLabel("Número:");
+		textNumber = new JLabel("NÃºmero:");
 		numberField = new JTextField(9);
 		textClass = new JLabel("Turma:");
 		classField = new JTextField(5);
@@ -84,7 +84,7 @@ public class FirstProgram2 extends JPanel{
 	//Frame
 	public static void main(String[] args) {
 		
-		JFrame frame = new JFrame("Calcular Média");
+		JFrame frame = new JFrame("Calcular MÃ©dia");
 		frame.getContentPane().add(new FirstProgram2());
 		frame.setIconImage(logoImg.getImage());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -100,7 +100,7 @@ public class FirstProgram2 extends JPanel{
 				
 				double average = (Float.parseFloat(gradeField0.getText()) + Float.parseFloat(gradeField1.getText()) + Float.parseFloat(gradeField2.getText())) / 3;
 				
-				textResult.setText("O aluno "+ nameField.getText() + " (" + numberField.getText() + ")" + " Está com média " + String.valueOf(average));
+				textResult.setText("O aluno "+ nameField.getText() + " (" + numberField.getText() + ")" + " EstÃ¡ com mÃ©dia " + String.valueOf(average));
 				
 				if(average >= 6) {
 					smile.setVisible(true);
