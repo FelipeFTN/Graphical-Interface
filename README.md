@@ -15,3 +15,11 @@
 - Carro
 - Livro
 - Icone do Git
+- Icone do Java
+- Chapéu de Graduação
+- Icone DevOps
+- Check
+- Error
+- Emoji Triste
+- Emoji Feliz
+- PC
