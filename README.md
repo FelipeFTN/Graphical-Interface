@@ -1,4 +1,4 @@
-# Graphical-Interface
+# Java - Graphical-Interface
 
 ## Interface Gráfica
 
@@ -14,7 +14,7 @@
 
 - Carro - ProgressCar
 - Livro - TrabalhoQuiz
-- Icone do Git - TrabalhoQuiz
+- Icone do GitHub - TrabalhoQuiz
 - Icone do Java - TrabalhoQuiz
 - Chapéu de Graduação - AverageCalculator
 - Icone DevOps - TrabalhoQuiz
