@@ -2,7 +2,7 @@
 
 ## Interface Gráfica
 
-- TrabalhoQuiz - JFrame Quiz
+- Quiz - JFrame Quiz
 
 - ProgressCar - JFrame Barra de Progresso
 
@@ -10,16 +10,4 @@
 
 - AverageCalculator - Calculador de média escolar
 
-### Imagens
-
-- Carro - ProgressCar
-- Livro - TrabalhoQuiz
-- Icone do GitHub - TrabalhoQuiz
-- Icone do Java - TrabalhoQuiz
-- Chapéu de Graduação - AverageCalculator
-- Icone DevOps - TrabalhoQuiz
-- Check - Maki_Sushinho
-- Error - Maki_Sushinho
-- Emoji Triste - AverageCalculator
-- Emoji Feliz - AverageCalculator
-- PC - TrabalhoQuiz
+- Adventure Game - Java Graphics 2D Adventure Game Development 
