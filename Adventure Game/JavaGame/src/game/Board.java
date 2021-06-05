@@ -1,9 +1,9 @@
 package game;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -12,36 +12,45 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
 import game.models.Boss;
+import game.models.Chests;
 import game.models.ColliderBox;
+import game.models.Door;
+import game.models.Lever;
 import game.models.RectangleBox;
 import game.models.Scene;
 
 public class Board extends JPanel implements ActionListener{
 
-	private final int DELAY = 10;
 	private Timer timer;
 	private Boss boss;
 	private RectangleBox box;
 	private Rectangle playerHitBox;
+	private Rectangle leverHitBox;
+	private Rectangle chestHitBox, chestHitBox1;
+	private Chests chest;
+	private Lever lever;
+	private Scene scene;
+	private Image keyImage;
+	private Door door;
 	private List<ColliderBox> hitBox;
 	private int camX, camY;
 	private int offsetMaxX = 800 - 335;
 	private int offsetMaxY = 600 - 350;
 	private int offsetMinX = 0;
 	private int offsetMinY = 0;
-	private Scene scene;
+	private final int DELAY = 10;
 	public static boolean collided = false;
 	private final int[][] pos = {
-			{0, 0, 799, 40}, {0, 0, 43, 599}, {0, 557, 799, 40}, {542, 599, 40, -137}, {757, 507, 40, 90},
-			{757, 0, 40, 448}, {328, 207, 356, 40}, {542, 329, 215, 40}, {542, 329, 40, 54}, {285, 0, 40, 340}
+			{0, 0, 799, 40}, {0, 0, 43, 599}, {0, 557, 799, 40}, {542, 462, 40, 137}, {757, 507, 40, 90},
+			{757, 0, 40, 448}, {328, 207, 356, 40}, {542, 329, 215, 40}, {542, 329, 40, 54}, {285, 0, 40, 340},
+			{43, 474, 162, 81}
 	};
-	//private final int[][] siz = {
-	//		{799, 40}, {43, 599}, {799, 40}, {40, 137}, {91,  40},
-	//		{40, 448}, {356, 40}, {215, 40}, {40, 54}, {40, 340}
-	//};
 	public Board() {
 		addKeyListener(new TAdapter());
 		setPreferredSize(new Dimension(350, 250));
@@ -51,7 +60,12 @@ public class Board extends JPanel implements ActionListener{
 		boss = new Boss();
 		scene = new Scene();
 		box = new RectangleBox();
-		//block = new ColliderBox();
+		lever = new Lever();
+		chest = new Chests();
+		door = new Door();
+		ImageIcon imageKey = new ImageIcon("res//Key.png");
+		keyImage = imageKey.getImage();
+
 		timer = new Timer(DELAY, this);
 		timer.start();
 	}
@@ -70,15 +84,18 @@ public class Board extends JPanel implements ActionListener{
 		Toolkit.getDefaultToolkit().sync();
 		g2d.translate(-camX, -camY);
 		g2d.drawImage(scene.getImage(), scene.getX(), scene.getY(), this);//cenario
+		if(chest.openChest) {
+			g2d.drawImage(chest.getImage(), chest.getX(), chest.getY(), chest.getWidth(), chest.getHeight(), this);
+			g2d.drawImage(keyImage, box.getX() + 50, box.getY() + 40, 25, 15, null);
+		}
+		if(chest.openChest1) {
+			g2d.drawImage(chest.getImage(), chest.getX1(), chest.getY1(), chest.getWidth(), chest.getHeight(), this);
+			chest.openChest = false;
+		}
 		g2d.drawImage(box.getImage(), box.getX(), box.getY(), box.getWidth(), box.getHeight(), this);//Player
 		g2d.drawImage(boss.getImage(), boss.getX(), boss.getY(), boss.getWidth(), boss.getHeight(), this);
-		
-		for (ColliderBox hitBox : hitBox) {
-			if(hitBox.isVisible()) {
-				g.drawRect(hitBox.getX(), hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
-			}
-		}
-		g2d.setColor(Color.RED);//Borda da HitBox
+		g2d.drawImage(lever.getImage(), lever.getX(), lever.getY(), lever.getWidth(), lever.getHeight(), this);
+		g2d.drawImage(door.getImage(), door.getX(), door.getY(), this);
 		
 		g.dispose();
 		repaint();//Atualiza Frame
@@ -111,13 +128,12 @@ public class Board extends JPanel implements ActionListener{
 		repaint();
 	}
 	public void checkCollision() {
+		leverHitBox = lever.getBounds();
+		chestHitBox = chest.getBounds();
+		chestHitBox1 = chest.getBounds1();
+		
 		for (ColliderBox hitBox : hitBox) {
 			Rectangle r2 = hitBox.getBounds();
-			
-			if(playerHitBox.intersects(r2)) {
-				System.out.println("Colidiu Funcionou!");
-			}
-
 			if(playerHitBox.intersects(r2)) {
 				collided = true;
 				if(box.lastMove == "UP") {
@@ -144,7 +160,21 @@ public class Board extends JPanel implements ActionListener{
 			@Override
 			public void keyPressed(KeyEvent e) {
 				box.keyPressed(e);
+				int key = e.getKeyCode();
+				if(key == KeyEvent.VK_SPACE) {
+					if(playerHitBox.intersects(leverHitBox)) {
+						lever.leverActive = true;
+						lever.useLever();
+					}
+					if(playerHitBox.intersects(chestHitBox)) {
+						chest.chest();
+					}
+					if(playerHitBox.intersects(chestHitBox1)) {
+						chest.chest1();
+					}
+				}
 			}
+			
 			@Override
 			public void keyReleased(KeyEvent e) {
 				box.keyReleased(e);

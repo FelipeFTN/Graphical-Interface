@@ -23,7 +23,6 @@ public class RectangleBox extends JPanel{
 	public void playerImage() {
 		ImageIcon ii = new ImageIcon("res//PlayerResized.png");
 		image = ii.getImage();
-		
 		w = 50;
 		h = 72;
 	}

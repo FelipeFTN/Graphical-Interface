@@ -10,6 +10,7 @@ public class Boss extends JPanel{
 	private Image image;
 	private int x, y, w, h;
 	public static int chooseDirection;
+	public static boolean bossActive = false;
 	private int followDirection;
 	Random random = new Random();
 	
@@ -27,8 +28,10 @@ public class Boss extends JPanel{
 		h = 75;
 	}
 	public void bossMove() {
-		chooseDirection = random.nextInt(4);
-		System.out.println(chooseDirection);
+		if (bossActive) {
+			chooseDirection = random.nextInt(4);
+			
+		}
 	}
 	public Image getImage() {
 		return image;
