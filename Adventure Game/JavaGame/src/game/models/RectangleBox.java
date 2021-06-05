@@ -1,6 +1,5 @@
 package game.models;
 
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -8,13 +7,18 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import game.Board;
+
 public class RectangleBox extends JPanel{
 	private Image image;
 	private int x, y, dx, dy, w, h;
+	private int initX = 125;
+	private int initY = 50;
 	public static String lastMove;
 	
 	public RectangleBox() {
 		playerImage();
+		resetState();
 	}
 	public void playerImage() {
 		ImageIcon ii = new ImageIcon("res//PlayerResized.png");
@@ -31,7 +35,6 @@ public class RectangleBox extends JPanel{
 	//Controles
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		
 		if(key == KeyEvent.VK_UP) {
 			dy = -2;
 			lastMove = "UP";
@@ -64,6 +67,10 @@ public class RectangleBox extends JPanel{
 		if(key == KeyEvent.VK_RIGHT) {
 			dx = 0;
 		}
+	}
+	private void resetState() {
+		x = initX;
+		y = initY;
 	}
 	
 	//Metodos get

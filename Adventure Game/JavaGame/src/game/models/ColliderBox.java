@@ -9,11 +9,11 @@ import javax.swing.JPanel;
 public class ColliderBox extends JPanel{
 	private int x, y, w, h;
 	
-	public ColliderBox() {
-		x = 50;
-		y = 50;
-		w = 50;
-		h = 50;
+	public ColliderBox(int x, int y, int w, int h) {
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
 	}
 	public int getX() {
 		return x;
@@ -21,11 +21,13 @@ public class ColliderBox extends JPanel{
 	public int getY() {
 		return y;
 	}
-	public Rectangle getBounds(int x, int y, int w, int h) {
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
+	public int getWidth() {
+		return w;
+	}
+	public int getHeight() {
+		return h;
+	}
+	public Rectangle getBounds() {
 		return new Rectangle(x, y, w, h);
 	}
 }

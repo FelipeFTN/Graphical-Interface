@@ -16,18 +16,18 @@ public class Boss extends JPanel{
 	public Boss() {
 		bossImage();
 		bossMove();
-		x = 200;
-		y = 200;
+		x = 690;
+		y = 441;
 	}
 	private void bossImage() {
 		// TODO Auto-generated method stub
 		ImageIcon ii = new ImageIcon("res//BossResized.png");
 		image = ii.getImage();
-		w = image.getWidth(null);
-		h = image.getHeight(null);
+		w = 50;
+		h = 75;
 	}
 	public void bossMove() {
-		chooseDirection = random.nextInt(3);
+		chooseDirection = random.nextInt(4);
 		System.out.println(chooseDirection);
 	}
 	public Image getImage() {
@@ -38,6 +38,12 @@ public class Boss extends JPanel{
 	}
 	public int getY() {
 		return y;
+	}
+	public int getWidth() {
+		return w;
+	}
+	public int getHeight() {
+		return h;
 	}
 	public Rectangle getBounds(int x, int y) {
 		this.x = x;
