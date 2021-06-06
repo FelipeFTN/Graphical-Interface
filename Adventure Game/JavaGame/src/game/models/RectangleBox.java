@@ -10,11 +10,14 @@ import javax.swing.JPanel;
 import game.Board;
 
 public class RectangleBox extends JPanel{
+	private static final KeyEvent KeyEvent = null;
 	private Image image;
 	private int x, y, dx, dy, w, h;
 	private int initX = 125;
 	private int initY = 50;
 	public static String lastMove;
+	private boolean collided = false;
+	public boolean enableR = true, enableL = true, enableU = true, enableD = true;
 	
 	public RectangleBox() {
 		playerImage();
@@ -31,24 +34,28 @@ public class RectangleBox extends JPanel{
 		y += dy;
 	}
 	
+	public void collided(boolean collided) {
+		// TODO Auto-generated method stub
+		this.collided = collided;
+	}
 	//Controles
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		if(key == KeyEvent.VK_UP) {
-			dy = -2;
 			lastMove = "UP";
+			dy = 2;
 		}
 		if(key == KeyEvent.VK_DOWN) {
-			dy = 2;
 			lastMove = "DOWN";
+			dy = 2;
 		}
 		if(key == KeyEvent.VK_LEFT) {
-			dx = -2;
 			lastMove = "LEFT";
+			dx = -2;				
 		}
 		if(key == KeyEvent.VK_RIGHT) {
-			dx = 2;
 			lastMove = "RIGHT";
+			dx = 2;			
 		}
 	}
 	public void keyReleased(KeyEvent e) {

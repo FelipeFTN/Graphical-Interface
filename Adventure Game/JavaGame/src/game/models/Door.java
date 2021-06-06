@@ -1,30 +1,40 @@
 package game.models;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 
 public class Door {
 	private int x, y, x1, y1, w, h;
 	private Image image;
-	
+	private ImageIcon openedDoor, closedDoor;
+	private Chests chest;
 	public Door() {
 		loadImage();
 		x = 685;
 		y = 107;
-		x1 = 774;
+		x1 = 760;
 		y1 = 107;
+		chest = new Chests();
 	}
 	private void loadImage() {
 		// TODO Auto-generated method stub
-		ImageIcon closedDoor = new ImageIcon("res//ClosedDoor.png");
-		ImageIcon openedDoor = new ImageIcon("res//OpenedDoor.png");
+		closedDoor = new ImageIcon("res//ClosedDoor.png");
+		openedDoor = new ImageIcon("res//OpenedDoor.png");
 		
 		image = closedDoor.getImage();
 		w = image.getWidth(null);
 		h = image.getHeight(null);
 	}
-	
+	public void useDoor(boolean openChest) {
+		if(openChest) {
+			x = x1;
+			y = y1;
+			image = openedDoor.getImage();
+			chest.openChest = false;
+		}
+	}
 	public Image getImage() {
 		return image;
 	}
@@ -45,6 +55,9 @@ public class Door {
 	}
 	public int getHeight() {
 		return h;
+	}
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, w, h);
 	}
 	
 

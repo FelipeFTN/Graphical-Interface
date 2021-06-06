@@ -12,11 +12,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
 import game.models.Boss;
 import game.models.Chests;
 import game.models.ColliderBox;
@@ -29,8 +27,8 @@ public class Board extends JPanel implements ActionListener{
 
 	private Timer timer;
 	private Boss boss;
-	private RectangleBox box;
-	private Rectangle playerHitBox;
+	public RectangleBox box;
+	public Rectangle playerHitBox;
 	private Rectangle leverHitBox;
 	private Rectangle chestHitBox, chestHitBox1;
 	private Chests chest;
@@ -38,6 +36,8 @@ public class Board extends JPanel implements ActionListener{
 	private Scene scene;
 	private Image keyImage;
 	private Door door;
+	private Rectangle doorHitBox;
+	public Rectangle r2;
 	private List<ColliderBox> hitBox;
 	private int camX, camY;
 	private int offsetMaxX = 800 - 335;
@@ -90,12 +90,12 @@ public class Board extends JPanel implements ActionListener{
 		}
 		if(chest.openChest1) {
 			g2d.drawImage(chest.getImage(), chest.getX1(), chest.getY1(), chest.getWidth(), chest.getHeight(), this);
-			chest.openChest = false;
 		}
 		g2d.drawImage(box.getImage(), box.getX(), box.getY(), box.getWidth(), box.getHeight(), this);//Player
 		g2d.drawImage(boss.getImage(), boss.getX(), boss.getY(), boss.getWidth(), boss.getHeight(), this);
 		g2d.drawImage(lever.getImage(), lever.getX(), lever.getY(), lever.getWidth(), lever.getHeight(), this);
 		g2d.drawImage(door.getImage(), door.getX(), door.getY(), this);
+		g2d.drawImage(lever.getDoorImage(), lever.getDx(), lever.getDy(), this);
 		
 		g.dispose();
 		repaint();//Atualiza Frame
@@ -131,9 +131,11 @@ public class Board extends JPanel implements ActionListener{
 		leverHitBox = lever.getBounds();
 		chestHitBox = chest.getBounds();
 		chestHitBox1 = chest.getBounds1();
+		doorHitBox = door.getBounds();
+		Rectangle bossDoorHitBox = lever.getBoundsDoor();
 		
 		for (ColliderBox hitBox : hitBox) {
-			Rectangle r2 = hitBox.getBounds();
+			r2 = hitBox.getBounds();
 			if(playerHitBox.intersects(r2)) {
 				collided = true;
 				if(box.lastMove == "UP") {
@@ -153,7 +155,17 @@ public class Board extends JPanel implements ActionListener{
 			}
 		}
 		
-		
+		if(playerHitBox.intersects(doorHitBox)) {
+			if(box.lastMove == "UP") {
+				playerHitBox = box.getBounds(box.getX(), box.getY() + 2);
+				door.useDoor(chest.openChest);
+			}
+		}
+		if(playerHitBox.intersects(bossDoorHitBox) && !lever.leverActive) {
+			if(box.lastMove == "RIGHT") {
+				playerHitBox = box.getBounds(box.getX() -2, box.getY());
+			}
+		}
 	}
 	private class TAdapter extends KeyAdapter{
 		
