@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 import game.Board;
 
-public class RectangleBox extends JPanel{
+public class RectangleBox extends JPanel{ 				//Este aqui Controla o Player
 	private static final KeyEvent KeyEvent = null;
 	private Image image;
 	private int x, y, dx, dy, w, h;
@@ -17,33 +17,31 @@ public class RectangleBox extends JPanel{
 	private int initY = 50;
 	public static String lastMove;
 	private boolean collided = false;
-	public boolean enableR = true, enableL = true, enableU = true, enableD = true;
 	
 	public RectangleBox() {
 		playerImage();
 		resetState();
 	}
-	public void playerImage() {
+	public void playerImage() {							//Cria a imagem do Player
 		ImageIcon ii = new ImageIcon("res//PlayerResized.png");
 		image = ii.getImage();
 		w = 50;
 		h = 72;
 	}
-	public void boxMove() {
+	public void boxMove() {								//Movimentos do Player
 		x += dx;
 		y += dy;
 	}
 	
 	public void collided(boolean collided) {
-		// TODO Auto-generated method stub
 		this.collided = collided;
 	}
 	//Controles
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(KeyEvent e) {				//Se as teclas Setinhas forem apertadas, ele movimenta o player
 		int key = e.getKeyCode();
 		if(key == KeyEvent.VK_UP) {
 			lastMove = "UP";
-			dy = 2;
+			dy = -2;
 		}
 		if(key == KeyEvent.VK_DOWN) {
 			lastMove = "DOWN";
@@ -58,7 +56,7 @@ public class RectangleBox extends JPanel{
 			dx = 2;			
 		}
 	}
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased(KeyEvent e) {			//Se as teclas Setinhas forem soltas ele para o player
 		int key = e.getKeyCode();
 		
 		if(key == KeyEvent.VK_UP) {
@@ -74,7 +72,7 @@ public class RectangleBox extends JPanel{
 			dx = 0;
 		}
 	}
-	private void resetState() {
+	private void resetState() {					//Isso aqui faz o player iniciar numa determinada posicao
 		x = initX;
 		y = initY;
 	}

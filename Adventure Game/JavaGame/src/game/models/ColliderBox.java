@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-public class ColliderBox extends JPanel{
+public class ColliderBox extends JPanel{ // Arquivo das Hitbox
 	private int x, y, w, h;
 	
 	public ColliderBox(int x, int y, int w, int h) {

@@ -12,7 +12,7 @@ public class Scene extends JPanel{
 	public Scene() {
 		loadImage();
 	}
-	private void loadImage() {
+	private void loadImage() {					//So cria a imagem do cenario e manda pro Board.java
 		ImageIcon ii = new ImageIcon("res//Scenario.png");
 		image = ii.getImage();
 		x = 0;

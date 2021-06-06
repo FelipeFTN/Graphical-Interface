@@ -28,7 +28,7 @@ public class Lever {
 		
 	}
 
-	private void leverImage() {
+	private void leverImage() {						//Cria as imagens da alavanca
 		leverOff = new ImageIcon("res//lever0.png");
 		leverOn = new ImageIcon("res//lever1.png");	
 		
@@ -36,7 +36,7 @@ public class Lever {
 		w = image.getWidth(null);
 		h = image.getHeight(null);
 	}
-	private void bossDoorImage() {
+	private void bossDoorImage() {					//Cria as imagens da porta que a alavanca abre
 		bossDoorOpened = new ImageIcon("res//BossDoorOpened.png");
 		bossDoorClosed = new ImageIcon("res//BossDoorClosed.png");
 		
@@ -44,8 +44,8 @@ public class Lever {
 		dw = doorImage.getWidth(null);
 		dh = doorImage.getHeight(null);
 	}
-	public void useLever() {
-		if(leverActive) {
+	public void useLever() {						//Isso aqui eh chamado no arquivo Board.java na linha 211
+		if(leverActive) {							//Basicamente abre a porta do boss e ativa ele
 			image = leverOn.getImage();
 			doorImage = bossDoorOpened.getImage();
 			dx = dox;

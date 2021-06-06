@@ -23,14 +23,15 @@ import game.models.Lever;
 import game.models.RectangleBox;
 import game.models.Scene;
 
-public class Board extends JPanel implements ActionListener{
-
+public class Board extends JPanel implements ActionListener{			//Arquivo onde acontece todas as acoes do jogo
+	//Criacao da variaveis
 	private Timer timer;
 	private Boss boss;
 	public RectangleBox box;
 	public Rectangle playerHitBox;
 	private Rectangle leverHitBox;
 	private Rectangle chestHitBox, chestHitBox1;
+	private Rectangle bossHitBox;
 	private Chests chest;
 	private Lever lever;
 	private Scene scene;
@@ -38,6 +39,9 @@ public class Board extends JPanel implements ActionListener{
 	private Door door;
 	private Rectangle doorHitBox;
 	public Rectangle r2;
+	private Image gameOverImage;
+	private Image potion;
+	private Image endGame;
 	private List<ColliderBox> hitBox;
 	private int camX, camY;
 	private int offsetMaxX = 800 - 335;
@@ -49,66 +53,79 @@ public class Board extends JPanel implements ActionListener{
 	private final int[][] pos = {
 			{0, 0, 799, 40}, {0, 0, 43, 599}, {0, 557, 799, 40}, {542, 462, 40, 137}, {757, 507, 40, 90},
 			{757, 0, 40, 448}, {328, 207, 356, 40}, {542, 329, 215, 40}, {542, 329, 40, 54}, {285, 0, 40, 340},
-			{43, 474, 162, 81}
-	};
+			{43, 474, 162, 81}};										// PosicaoX, posicaoY, Largura, Altura.
+																		// Cada chave contem o posicionamento de cada hitbox
+	
+	//Inicio do codigo
 	public Board() {
-		addKeyListener(new TAdapter());
+		addKeyListener(new TAdapter());									//Instanciando o teclado
 		setPreferredSize(new Dimension(350, 250));
-		setFocusable(true);
+		setFocusable(true);												//Setar o foco para a janela do jogo ao iniciar
 		
-		initHitBox();
-		boss = new Boss();
-		scene = new Scene();
-		box = new RectangleBox();
-		lever = new Lever();
-		chest = new Chests();
-		door = new Door();
+		initHitBox();													//Chamando o metodo que posiciona todas as hitbox nas paredes
+		
+																		//Instanciando um monte de coisas
+		boss = new Boss();												//Inimigo
+		scene = new Scene();											//Cenario
+		box = new RectangleBox();										//Player
+		lever = new Lever();											//Alavanca
+		chest = new Chests();											//Baus
+		door = new Door();												//Porta
+		
+																		//Criando algumas imagens
 		ImageIcon imageKey = new ImageIcon("res//Key.png");
 		keyImage = imageKey.getImage();
+		ImageIcon imagePotion = new ImageIcon("res//Potion.png");
+		potion = imagePotion.getImage();
 
+																		//Isso aqui mantem tudo funcionando em seu devido tempo
 		timer = new Timer(DELAY, this);
 		timer.start();
 	}
 	
-	private void initHitBox() {
-		// TODO Auto-generated method stub
+	private void initHitBox() {											//Cria todas as hitbox em seu devido lugar
 		hitBox = new ArrayList<>();
 		for (int[] p : pos) {
 				hitBox.add(new ColliderBox(p[0], p[1], p[2], p[3]));				
 		}
 	}
+	
 	@Override
-	public void paint(Graphics g) {
+	public void paint(Graphics g) {										//Desenha tudo que aparece na tela
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
 		Toolkit.getDefaultToolkit().sync();
-		g2d.translate(-camX, -camY);
-		g2d.drawImage(scene.getImage(), scene.getX(), scene.getY(), this);//cenario
+		g2d.translate(-camX, -camY);																					//Movimentacao da camera com o player
+		g2d.drawImage(scene.getImage(), scene.getX(), scene.getY(), this);												//Desenha o cenario
 		if(chest.openChest) {
-			g2d.drawImage(chest.getImage(), chest.getX(), chest.getY(), chest.getWidth(), chest.getHeight(), this);
-			g2d.drawImage(keyImage, box.getX() + 50, box.getY() + 40, 25, 15, null);
+			g2d.drawImage(chest.getImage(), chest.getX(), chest.getY(), chest.getWidth(), chest.getHeight(), this);		//Desenha o Bau 1
+			g2d.drawImage(keyImage, box.getX() + 50, box.getY() + 40, 25, 15, null);									//Desenha a Chave
 		}
 		if(chest.openChest1) {
-			g2d.drawImage(chest.getImage(), chest.getX1(), chest.getY1(), chest.getWidth(), chest.getHeight(), this);
+			g2d.drawImage(chest.getImage(), chest.getX1(), chest.getY1(), chest.getWidth(), chest.getHeight(), this);	//Desenha o bau 2
+			g2d.drawImage(potion, box.getX() + 48, box.getY() + 40, 15, 25, null);										//Desenha a pocao
 		}
-		g2d.drawImage(box.getImage(), box.getX(), box.getY(), box.getWidth(), box.getHeight(), this);//Player
-		g2d.drawImage(boss.getImage(), boss.getX(), boss.getY(), boss.getWidth(), boss.getHeight(), this);
-		g2d.drawImage(lever.getImage(), lever.getX(), lever.getY(), lever.getWidth(), lever.getHeight(), this);
-		g2d.drawImage(door.getImage(), door.getX(), door.getY(), this);
-		g2d.drawImage(lever.getDoorImage(), lever.getDx(), lever.getDy(), this);
-		
-		g.dispose();
-		repaint();//Atualiza Frame
+		g2d.drawImage(box.getImage(), box.getX(), box.getY(), box.getWidth(), box.getHeight(), this);					//Desenha o Player
+		g2d.drawImage(lever.getImage(), lever.getX(), lever.getY(), lever.getWidth(), lever.getHeight(), this);			//Desenha a alavanca
+		g2d.drawImage(door.getImage(), door.getX(), door.getY(), this);													//Desenha a porta
+		g2d.drawImage(lever.getDoorImage(), lever.getDx(), lever.getDy(), this);										//Desenha a porta do Boss
+		if(boss.bossAlive) {			
+			g2d.drawImage(boss.getImage(), boss.getX(), boss.getY(), boss.getWidth(), boss.getHeight(), this);			//Se o boss estiver vivo: Desenha o Boss
+		}
+		g2d.drawImage(gameOverImage, camX, camY, 320, 313, null);														//Desenha a tela de GameOver
+		g2d.drawImage(endGame, camX, camY, 320, 313, null);																//Desenha a tela de Fim de Jogo
+		g.dispose();																									//Desenha
+		repaint();																										//Atualiza os Desenhos
 	}
 	public void actionPerformed(ActionEvent e) {
 		step();
 	}
-	private void step() {
+	private void step() {												//Metodo que atualiza a cada movimento do player
 		box.boxMove();
-		playerHitBox = box.getBounds(box.getX(), box.getY());
-		checkCollision();
+		playerHitBox = box.getBounds(box.getX(), box.getY());			//Cria a hitbox do player
+		checkCollision();												//Verifica se houve colisao
 		
-		//Camera
+		//Sistema complexo de Camera
 		
 		camX = box.getX() - 335 / 2;
 		camY = box.getY() - 350 / 2;
@@ -127,16 +144,19 @@ public class Board extends JPanel implements ActionListener{
 		}
 		repaint();
 	}
-	public void checkCollision() {
+	public void checkCollision() {										//Checa se houve colisao (acaba na linha 198)
+		//Instanciando um monte de HitBox
 		leverHitBox = lever.getBounds();
 		chestHitBox = chest.getBounds();
 		chestHitBox1 = chest.getBounds1();
 		doorHitBox = door.getBounds();
+		bossHitBox = boss.getBounds();
+		Rectangle exit = new Rectangle(750, 449, 50, 58);
 		Rectangle bossDoorHitBox = lever.getBoundsDoor();
 		
 		for (ColliderBox hitBox : hitBox) {
 			r2 = hitBox.getBounds();
-			if(playerHitBox.intersects(r2)) {
+			if(playerHitBox.intersects(r2)) {							//Sistema de colisao (bugado)
 				collided = true;
 				if(box.lastMove == "UP") {
 					playerHitBox = box.getBounds(box.getX(), box.getY() + 2);
@@ -154,6 +174,15 @@ public class Board extends JPanel implements ActionListener{
 				collided = false;
 			}
 		}
+		if(playerHitBox.intersects(bossHitBox) && !chest.openChest1 && boss.bossAlive) {
+			//Game Over
+			ImageIcon gameOverii = new ImageIcon("res//YouDied.png");
+			gameOverImage = gameOverii.getImage();
+		} 
+		if(playerHitBox.intersects(exit) && !boss.bossAlive) {
+			ImageIcon endImage = new ImageIcon("res//End.png");
+			endGame = endImage.getImage();
+		}
 		
 		if(playerHitBox.intersects(doorHitBox)) {
 			if(box.lastMove == "UP") {
@@ -167,28 +196,37 @@ public class Board extends JPanel implements ActionListener{
 			}
 		}
 	}
-	private class TAdapter extends KeyAdapter{
+	
+	private class TAdapter extends KeyAdapter{	//Verifica se foi apertado alguma tecla no teclado
 		
+		
+												//Atencao: Nesta parte deve ser inserida os itens no banco de dados
 			@Override
 			public void keyPressed(KeyEvent e) {
 				box.keyPressed(e);
 				int key = e.getKeyCode();
-				if(key == KeyEvent.VK_SPACE) {
-					if(playerHitBox.intersects(leverHitBox)) {
-						lever.leverActive = true;
+				if(key == KeyEvent.VK_SPACE) {					//Se apertar espaco...
+					if(playerHitBox.intersects(leverHitBox)) {						//e estiver colidindo com a alavanca
+						lever.leverActive = true;									//ativa a alavanca
 						lever.useLever();
-					}
-					if(playerHitBox.intersects(chestHitBox)) {
-						chest.chest();
-					}
-					if(playerHitBox.intersects(chestHitBox1)) {
-						chest.chest1();
+					}											//Se apertar espaco...
+					if(playerHitBox.intersects(bossHitBox) && chest.openChest1) {	//e estiver colidinho com o boss e estiver com a pocao na mao
+						boss.bossAlive = false;										//boss morre
+						chest.openChest1 = false;									//acaba a pocao
+					}											//Se apertar espaco...
+					if(playerHitBox.intersects(chestHitBox)) {						//e estiver colidindo com o bau 1
+						chest.chest();												//Pega a chave na mao
+																					//Adicionar aqui, inserir no banco de dados: item = chave
+					}											//Se apertar espaco...
+					if(playerHitBox.intersects(chestHitBox1)) {						//e estiver colidindo com o bau 2
+						chest.chest1();												//pega a pocao na mao
+																					//Adicionar aqui, inserir no banco de dados: item = pocao
 					}
 				}
 			}
 			
 			@Override
-			public void keyReleased(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {				//Verifica se alguma tecla foi solta
 				box.keyReleased(e);
 			}
 	}

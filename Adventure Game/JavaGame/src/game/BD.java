@@ -3,11 +3,11 @@ package game;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
-public class BD {
+public class BD {							//Serve para conectar o banco de dados (precisa estar com o Xampp ligado)
 	
 	public Connection c = null;
 	private final String driver = "com.mysql.jdbc.Driver";
-	private final String dbname = "banco";
+	private final String dbname = "itemplayer";								//Aqui vai o nome do banco de dados
 	private final String url = "jdbc:mysql://localhost:3306/"+dbname;
 	private final String login = "root";
 	private final String senha = "";

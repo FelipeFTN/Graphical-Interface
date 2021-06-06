@@ -20,17 +20,17 @@ public class Chests {
 		h = 59;
 		loadImage();
 	}
-	private void loadImage() {
+	private void loadImage() { 											//Cria imagem dos baus
 		// TODO Auto-generated method stub
 		ImageIcon ii = new ImageIcon("res//Chest.png");
 		image = ii.getImage();
 
 	}
-	public void chest() {
+	public void chest() {												//Metodo que faz o bau 1 ser aberto (depois eh chamado no Board.java)
 		// TODO Auto-generated method stub
 		 openChest = true;
 	}
-	public void chest1() {
+	public void chest1() {												//Metodo que faz o bau 2 ser aberto (depois eh chamado no Board.java)
 		// TODO Auto-generated method stub
 		openChest1 = true;
 	}
