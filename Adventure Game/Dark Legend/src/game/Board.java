@@ -194,7 +194,7 @@ public class Board extends JPanel implements ActionListener, Runnable{			//Arqui
 			ImageIcon gameOverii = new ImageIcon(Board.class.getResource("/YouDied.png"));
 			gameOverImage = gameOverii.getImage();
 		} 
-		if(playerHitBox.intersects(exit)) {
+		if(playerHitBox.intersects(exit) && !Chests.openChest && !Chests.openChest1) {
 			ImageIcon endImage = new ImageIcon(Board.class.getResource("/End.png"));
 			endGame = endImage.getImage();
 		}
