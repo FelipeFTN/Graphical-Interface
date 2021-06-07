@@ -10,17 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
 import game.models.Boss;
 import game.models.Chests;
 import game.models.ColliderBox;
@@ -30,6 +24,7 @@ import game.models.RectangleBox;
 import game.models.Scene;
 
 public class Board extends JPanel implements ActionListener, Runnable{			//Arquivo onde acontece todas as acoes do jogo
+	private static final long serialVersionUID = 1L;
 	//Criacao da variaveis
 	private Timer timer;
 	private Boss boss;
@@ -78,15 +73,15 @@ public class Board extends JPanel implements ActionListener, Runnable{			//Arqui
 		chest = new Chests();											//Baus
 		door = new Door();												//Porta
 																		//Criando algumas imagens
-		ImageIcon imageKey = new ImageIcon("res//Key.png");
+		ImageIcon imageKey = new ImageIcon(Board.class.getResource("/Key.png"));
 		keyImage = imageKey.getImage();
-		ImageIcon imagePotion = new ImageIcon("res//Potion.png");
+		ImageIcon imagePotion = new ImageIcon(Board.class.getResource("/Potion.png"));
 		potion = imagePotion.getImage();
 
 																		//Isso aqui mantem tudo funcionando em seu devido tempo
 		timer = new Timer(DELAY, this);
 		timer.start();
-		
+		/*
 		String sql = "UPDATE objective SET done=0 WHERE id=1";
 		String sql1 = "UPDATE objective SET done=0 WHERE id=2";
 		String sql2 = "UPDATE objective SET done=0 WHERE id=3";
@@ -101,13 +96,7 @@ public class Board extends JPanel implements ActionListener, Runnable{			//Arqui
 			
 		} catch (SQLException e1) {
 			e1.printStackTrace();
-		}	
-		
-		
-		
-		
-		
-		
+		}*/	
 	}
 	
 	private void initHitBox() {											//Cria todas as hitbox em seu devido lugar
@@ -116,7 +105,6 @@ public class Board extends JPanel implements ActionListener, Runnable{			//Arqui
 				hitBox.add(new ColliderBox(p[0], p[1], p[2], p[3]));				
 		}
 	}
-	
 	@Override
 	public void paint(Graphics g) {										//Desenha tudo que aparece na tela
 		super.paint(g);
@@ -124,11 +112,11 @@ public class Board extends JPanel implements ActionListener, Runnable{			//Arqui
 		Toolkit.getDefaultToolkit().sync();
 		g2d.translate(-camX, -camY);																					//Movimentacao da camera com o player
 		g2d.drawImage(scene.getImage(), scene.getX(), scene.getY(), this);												//Desenha o cenario
-		if(chest.openChest) {
+		if(Chests.openChest) {
 			g2d.drawImage(chest.getImage(), chest.getX(), chest.getY(), chest.getWidth(), chest.getHeight(), this);		//Desenha o Bau 1
 			g2d.drawImage(keyImage, box.getX() + 50, box.getY() + 40, 25, 15, null);									//Desenha a Chave
 		}
-		if(chest.openChest1) {
+		if(Chests.openChest1) {
 			g2d.drawImage(chest.getImage(), chest.getX1(), chest.getY1(), chest.getWidth(), chest.getHeight(), this);	//Desenha o bau 2
 			g2d.drawImage(potion, box.getX() + 48, box.getY() + 40, 15, 25, null);										//Desenha a pocao
 		}
@@ -136,7 +124,7 @@ public class Board extends JPanel implements ActionListener, Runnable{			//Arqui
 		g2d.drawImage(lever.getImage(), lever.getX(), lever.getY(), lever.getWidth(), lever.getHeight(), this);			//Desenha a alavanca
 		g2d.drawImage(door.getImage(), door.getX(), door.getY(), this);													//Desenha a porta
 		g2d.drawImage(lever.getDoorImage(), lever.getDx(), lever.getDy(), this);										//Desenha a porta do Boss
-		if(boss.bossAlive) {			
+		if(Boss.bossAlive) {			
 			g2d.drawImage(boss.getImage(), boss.getX(), boss.getY(), boss.getWidth(), boss.getHeight(), this);			//Se o boss estiver vivo: Desenha o Boss
 		}
 		g2d.drawImage(gameOverImage, camX, camY, 320, 313, null);														//Desenha a tela de GameOver
@@ -185,48 +173,46 @@ public class Board extends JPanel implements ActionListener, Runnable{			//Arqui
 			r2 = hitBox.getBounds();
 			if(playerHitBox.intersects(r2)) {							//Sistema de colisao (bugado)
 				collided = true;
-				if(box.lastMove == "UP") {
+				if(RectangleBox.lastMove == "UP") {
 					playerHitBox = box.getBounds(box.getX(), box.getY() + 2);
 				}
-				if(box.lastMove == "DOWN") {
+				if(RectangleBox.lastMove == "DOWN") {
 					playerHitBox = box.getBounds(box.getX(), box.getY() - 2);
 				}
-				if(box.lastMove == "LEFT") {
+				if(RectangleBox.lastMove == "LEFT") {
 					playerHitBox = box.getBounds(box.getX() + 2, box.getY());
 				}
-				if(box.lastMove == "RIGHT") {
+				if(RectangleBox.lastMove == "RIGHT") {
 					playerHitBox = box.getBounds(box.getX() - 2, box.getY());
 				}
 			}else {
 				collided = false;
 			}
 		}
-		if(playerHitBox.intersects(bossHitBox) && !chest.openChest1 && boss.bossAlive) {
+		if(playerHitBox.intersects(bossHitBox) && !Chests.openChest1 && Boss.bossAlive) {
 			//Game Over
-			ImageIcon gameOverii = new ImageIcon("res//YouDied.png");
+			ImageIcon gameOverii = new ImageIcon(Board.class.getResource("/YouDied.png"));
 			gameOverImage = gameOverii.getImage();
 		} 
-		if(playerHitBox.intersects(exit) && !boss.bossAlive) {
-			ImageIcon endImage = new ImageIcon("res//End.png");
+		if(playerHitBox.intersects(exit)) {
+			ImageIcon endImage = new ImageIcon(Board.class.getResource("/End.png"));
 			endGame = endImage.getImage();
 		}
 		
 		if(playerHitBox.intersects(doorHitBox)) {
-			if(box.lastMove == "UP") {
+			if(RectangleBox.lastMove == "UP") {
 				playerHitBox = box.getBounds(box.getX(), box.getY() + 2);
-				door.useDoor(chest.openChest);
+				door.useDoor(Chests.openChest);
 			}
 		}
-		if(playerHitBox.intersects(bossDoorHitBox) && !lever.leverActive) {
-			if(box.lastMove == "RIGHT") {
+		if(playerHitBox.intersects(bossDoorHitBox) && !Lever.leverActive) {
+			if(RectangleBox.lastMove == "RIGHT") {
 				playerHitBox = box.getBounds(box.getX() -2, box.getY());
 			}
 		}
 	}
 	
 	private class TAdapter extends KeyAdapter{	//Verifica se foi apertado alguma tecla no teclado
-		
-		
 												//Atencao: Nesta parte deve ser inserida os itens no banco de dados
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -234,43 +220,44 @@ public class Board extends JPanel implements ActionListener, Runnable{			//Arqui
 				int key = e.getKeyCode();
 				if(key == KeyEvent.VK_SPACE) {					//Se apertar espaco...
 					if(playerHitBox.intersects(leverHitBox)) {						//e estiver colidindo com a alavanca
-						lever.leverActive = true;									//ativa a alavanca
+						Lever.leverActive = true;									//ativa a alavanca
 						lever.useLever();
 					}											//Se apertar espaco...
-					if(playerHitBox.intersects(bossHitBox) && chest.openChest1) {	//e estiver colidinho com o boss e estiver com a pocao na mao
-						boss.bossAlive = false;										//boss morre
-						chest.openChest1 = false;									//acaba a pocao
-						String sql = "UPDATE objective SET done=1 WHERE id=3";
+					if(playerHitBox.intersects(bossHitBox) && Chests.openChest1) {	//e estiver colidinho com o boss e estiver com a pocao na mao
+						Boss.x = 125;
+						Boss.y = 50;												//Boss se afasta
+						Chests.openChest1 = false;									//acaba a pocao
+						/*String sql = "UPDATE objective SET done=1 WHERE id=3";
 						//Prepara a instrucao SQL
 						try {
 							PreparedStatement ps = BD.createConnection().prepareStatement(sql);
 							ps.executeUpdate();
 						} catch (SQLException e1) {
 							e1.printStackTrace();
-						}
+						}*/
 
 					}											//Se apertar espaco...
 					if(playerHitBox.intersects(chestHitBox)) {						//e estiver colidindo com o bau 1
 						chest.chest();												//Pega a chave na mao
-						String sql = "UPDATE objective SET done=1 WHERE id=1";
+						/*String sql = "UPDATE objective SET done=1 WHERE id=1";
 						//Prepara a instrucao SQL
 						try {
 							PreparedStatement ps = BD.createConnection().prepareStatement(sql);
 							ps.executeUpdate();
 						} catch (SQLException e1) {
 							e1.printStackTrace();
-						}
+						}*/
 					}											//Se apertar espaco...
 					if(playerHitBox.intersects(chestHitBox1)) {						//e estiver colidindo com o bau 2
 						chest.chest1();												//pega a pocao na mao
-						String sql = "UPDATE objective SET done=1 WHERE id=2";
+						/*String sql = "UPDATE objective SET done=1 WHERE id=2";
 						//Prepara a instrucao SQL
 						try {
 							PreparedStatement ps = BD.createConnection().prepareStatement(sql);
 							ps.executeUpdate();
 						} catch (SQLException e1) {
 							e1.printStackTrace();
-						}											//Adicionar aqui, inserir no banco de dados: item = pocao
+						}*/											//Adicionar aqui, inserir no banco de dados: item = pocao
 					}
 				}
 			}

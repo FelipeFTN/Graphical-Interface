@@ -5,30 +5,22 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class Scene extends JPanel{
-	private Image image, imageBackground;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Image image;
 	private int x, y, w, h;
-	private int xb, yb, wb, hb;
-	
 	public Scene() {
 		loadImage();
 	}
 	private void loadImage() {					//So cria a imagem do cenario e manda pro Board.java
-		ImageIcon ii = new ImageIcon("res//Scenario.png");
+		ImageIcon ii = new ImageIcon(Scene.class.getResource("/Scenario.png"));
 		image = ii.getImage();
 		x = 0;
 		y = 0;
 		w = image.getWidth(null);
 		h = image.getHeight(null);
-		//Background Image
-		ImageIcon ib = new ImageIcon("res//Background.png");
-		imageBackground = ib.getImage();
-		xb = 0;
-		yb = 0;
-		wb = imageBackground.getWidth(null);
-		hb = imageBackground.getHeight(null);
-				
-		
-		
 	}
 	public Image getImage() {
 		return image;

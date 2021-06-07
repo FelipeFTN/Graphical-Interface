@@ -1,6 +1,5 @@
 package game.models;
 
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.Random;
@@ -11,10 +10,14 @@ import javax.swing.ImageIcon;
 
 public class Boss {
 	private Image image;
-	private int x, y, w, h, dx, dy, px, py;
+	public static int x;
+	public static int y;
+	private int w;
+	private int h;
+	private int dx;
+	private int dy;
 	public static int chooseDirection;
 	public static boolean bossActive, bossAlive = true;
-	private RectangleBox player;
 	private Timer timer;
 	Random random = new Random();
 	
@@ -24,22 +27,18 @@ public class Boss {
 		x = 690;
 		y = 441;
 		
-		player = new RectangleBox();
+		new RectangleBox();
 		
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new ScheduleTask(), 2000, 500);
 	}
 		
 	private void bossImage() {									//Cria a imagem do Boss
-		ImageIcon ii = new ImageIcon("res//BossResized.png");
+		ImageIcon ii = new ImageIcon(Boss.class.getResource("/BossResized.png"));
 		image = ii.getImage();
 		w = 50;
 		h = 75;
 }
-	private void paint(Graphics g) {
-		
-	}
-	
 	private class ScheduleTask extends TimerTask{	//Faz o boss sair andando por ai
 		
 		@Override
@@ -72,6 +71,18 @@ public class Boss {
 				}
 				if(getY() > 483) {
 					dy = -20;
+				}
+				if(RectangleBox.x < getX()) {
+					dx = -23;
+				}
+				if(RectangleBox.y < getY()) {
+					dy = -23;
+				}
+				if(RectangleBox.x > getX()) {
+					dx = 23;
+				}
+				if(RectangleBox.y > getY()) {
+					dy = 23;
 				}
 				x += dx;
 				y += dy;

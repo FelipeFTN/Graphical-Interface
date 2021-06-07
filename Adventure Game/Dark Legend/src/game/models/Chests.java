@@ -1,6 +1,5 @@
 package game.models;
 
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import javax.swing.ImageIcon;
@@ -22,7 +21,7 @@ public class Chests {
 	}
 	private void loadImage() { 											//Cria imagem dos baus
 		// TODO Auto-generated method stub
-		ImageIcon ii = new ImageIcon("res//Chest.png");
+		ImageIcon ii = new ImageIcon(Chests.class.getResource("/Chest.png"));
 		image = ii.getImage();
 
 	}

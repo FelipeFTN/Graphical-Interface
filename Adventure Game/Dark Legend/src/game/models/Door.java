@@ -9,19 +9,18 @@ public class Door {
 	private int x, y, x1, y1, w, h;
 	private Image image;
 	private ImageIcon openedDoor, closedDoor;
-	private Chests chest;
 	public Door() {
 		loadImage();
 		x = 685;
 		y = 107;
 		x1 = 760;
 		y1 = 107;
-		chest = new Chests();
+		new Chests();
 	}
 	private void loadImage() {
 		// TODO Auto-generated method stub
-		closedDoor = new ImageIcon("res//ClosedDoor.png");
-		openedDoor = new ImageIcon("res//OpenedDoor.png");
+		closedDoor = new ImageIcon(Door.class.getResource("/ClosedDoor.png"));
+		openedDoor = new ImageIcon(Door.class.getResource("/OpenedDoor.png"));
 		
 		image = closedDoor.getImage();
 		w = image.getWidth(null);
@@ -32,7 +31,7 @@ public class Door {
 			x = x1;
 			y = y1;
 			image = openedDoor.getImage();
-			chest.openChest = false;
+			Chests.openChest = false;
 		}
 	}
 	public Image getImage() {
