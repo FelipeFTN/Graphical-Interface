@@ -10,11 +10,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
 import game.models.Boss;
 import game.models.Chests;
 import game.models.ColliderBox;
@@ -23,7 +29,7 @@ import game.models.Lever;
 import game.models.RectangleBox;
 import game.models.Scene;
 
-public class Board extends JPanel implements ActionListener{			//Arquivo onde acontece todas as acoes do jogo
+public class Board extends JPanel implements ActionListener, Runnable{			//Arquivo onde acontece todas as acoes do jogo
 	//Criacao da variaveis
 	private Timer timer;
 	private Boss boss;
@@ -71,7 +77,6 @@ public class Board extends JPanel implements ActionListener{			//Arquivo onde ac
 		lever = new Lever();											//Alavanca
 		chest = new Chests();											//Baus
 		door = new Door();												//Porta
-		
 																		//Criando algumas imagens
 		ImageIcon imageKey = new ImageIcon("res//Key.png");
 		keyImage = imageKey.getImage();
@@ -81,6 +86,28 @@ public class Board extends JPanel implements ActionListener{			//Arquivo onde ac
 																		//Isso aqui mantem tudo funcionando em seu devido tempo
 		timer = new Timer(DELAY, this);
 		timer.start();
+		
+		String sql = "UPDATE objective SET done=0 WHERE id=1";
+		String sql1 = "UPDATE objective SET done=0 WHERE id=2";
+		String sql2 = "UPDATE objective SET done=0 WHERE id=3";
+		//Prepara a instrucao SQL
+		try {
+			PreparedStatement ps = BD.createConnection().prepareStatement(sql);
+			ps.executeUpdate();
+			ps = BD.createConnection().prepareStatement(sql1);
+			ps.executeUpdate();
+			ps = BD.createConnection().prepareStatement(sql2);
+			ps.executeUpdate();
+			
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}	
+		
+		
+		
+		
+		
+		
 	}
 	
 	private void initHitBox() {											//Cria todas as hitbox em seu devido lugar
@@ -213,14 +240,37 @@ public class Board extends JPanel implements ActionListener{			//Arquivo onde ac
 					if(playerHitBox.intersects(bossHitBox) && chest.openChest1) {	//e estiver colidinho com o boss e estiver com a pocao na mao
 						boss.bossAlive = false;										//boss morre
 						chest.openChest1 = false;									//acaba a pocao
+						String sql = "UPDATE objective SET done=1 WHERE id=3";
+						//Prepara a instrucao SQL
+						try {
+							PreparedStatement ps = BD.createConnection().prepareStatement(sql);
+							ps.executeUpdate();
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+
 					}											//Se apertar espaco...
 					if(playerHitBox.intersects(chestHitBox)) {						//e estiver colidindo com o bau 1
 						chest.chest();												//Pega a chave na mao
-																					//Adicionar aqui, inserir no banco de dados: item = chave
+						String sql = "UPDATE objective SET done=1 WHERE id=1";
+						//Prepara a instrucao SQL
+						try {
+							PreparedStatement ps = BD.createConnection().prepareStatement(sql);
+							ps.executeUpdate();
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
 					}											//Se apertar espaco...
 					if(playerHitBox.intersects(chestHitBox1)) {						//e estiver colidindo com o bau 2
 						chest.chest1();												//pega a pocao na mao
-																					//Adicionar aqui, inserir no banco de dados: item = pocao
+						String sql = "UPDATE objective SET done=1 WHERE id=2";
+						//Prepara a instrucao SQL
+						try {
+							PreparedStatement ps = BD.createConnection().prepareStatement(sql);
+							ps.executeUpdate();
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}											//Adicionar aqui, inserir no banco de dados: item = pocao
 					}
 				}
 			}
@@ -235,5 +285,11 @@ public class Board extends JPanel implements ActionListener{			//Arquivo onde ac
 	}
 	public int getYBox() {
 		return box.getY();
+	}
+
+	@Override
+	public void run() {
+		
+		
 	}
 }

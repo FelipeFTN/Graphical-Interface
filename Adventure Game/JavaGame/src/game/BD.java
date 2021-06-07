@@ -1,44 +1,21 @@
 package game;
 
-import java.sql.*;
-import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
-public class BD {							//Serve para conectar o banco de dados (precisa estar com o Xampp ligado)
-	
-	public Connection c = null;
-	private final String driver = "com.mysql.jdbc.Driver";
-	private final String dbname = "itemplayer";								//Aqui vai o nome do banco de dados
-	private final String url = "jdbc:mysql://localhost:3306/"+dbname;
-	private final String login = "root";
-	private final String senha = "";
-	
-	
-	public boolean getConnection(){
-		try{
-			Class.forName(driver);
-			c = DriverManager.getConnection(url,login,senha);
-			System.out.println("Conectou");
-			return true;
-		}
-			catch (ClassNotFoundException erro){
-				JOptionPane.showMessageDialog(null,"Driver não encontrado\n" + erro.toString());
-				return false;
-			}
-			catch (SQLException erro){
-				JOptionPane.showMessageDialog(null,"Problema de conexão com a fonte de dados\n" + erro.toString());
-				return false;
-			}
-			
-		}
-	public void close(){
-		try{
-			c.close();
-			System.out.println("Desconectou");
-		}catch(SQLException erro){
-			
-		}
+public class BD{
+
+	public static Connection conexao;
+
+	public static Connection createConnection() throws SQLException{
+		String url = "jdbc:mysql://localhost:3306/game"; //Nome da base de dados
+		String user = "root"; //nome do usuário do MySQL
+		String password = ""; //senha do MySQL
+
+		conexao = null;
+		conexao = DriverManager.getConnection(url, user, password);
+
+		return conexao;
 	}
-	
-	}
-
-
+}

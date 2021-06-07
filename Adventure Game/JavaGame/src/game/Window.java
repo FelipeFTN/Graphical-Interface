@@ -2,7 +2,7 @@ package game;
 
 import javax.swing.JFrame;
 
-public class Window extends JFrame{//Este e o codigo principal responsavel por criar a janela
+public class Window extends JFrame {//Este e o codigo principal responsavel por criar a janela
 
 	public Window() {
 		
@@ -18,4 +18,5 @@ public class Window extends JFrame{//Este e o codigo principal responsavel por c
 		Window w = new Window(); //Instancia a Janela
 		w.setVisible(true);//deixa a janela visivel
 	}
+
 }
