@@ -67,7 +67,7 @@ public class TrabalhoQuiz extends JPanel{
 		add(Q1O3);
 		
 		JLabel gitImage = new JLabel("");
-		gitImage.setIcon(new ImageIcon("C:/Users/FelipeTT/Desktop/Java/Images/GitIcon.png"));//ALTERAR O DIRET�RIO
+		gitImage.setIcon(new ImageIcon("Images/GitIcon.png"));//ALTERAR O DIRET�RIO
 		gitImage.setBounds(205, 111, 30, 30);
 		add(gitImage);
 		
@@ -80,7 +80,7 @@ public class TrabalhoQuiz extends JPanel{
 		add(questionLabel1);
 		
 		JLabel javaImage = new JLabel("");
-		javaImage.setIcon(new ImageIcon("C:/Users/FelipeTT/Desktop/Java/Images/javaIcon.png"));//ALTERAR O DIRET�RIO
+		javaImage.setIcon(new ImageIcon("Images/javaIcon.png"));//ALTERAR O DIRET�RIO
 		javaImage.setBounds(205, 213, 39, 45);
 		add(javaImage);
 		
@@ -108,12 +108,12 @@ public class TrabalhoQuiz extends JPanel{
 		question2.add(Q3O1);
 		
 		Q3O2 = new JRadioButton("Uma estrutura de integra��o");
-		Q3O2.setBounds(222, 369, 188, 23);
+		Q3O2.setBounds(222, 369, 190, 23);
 		add(Q3O2);
 		question2.add(Q3O2);
 		
 		JLabel devOpsImage = new JLabel("");
-		devOpsImage.setIcon(new ImageIcon("C:/Users/FelipeTT/Desktop/Java/Images/DevOpsIcon.png"));//ALTERAR O DIRET�RIO
+		devOpsImage.setIcon(new ImageIcon("Images/DevOpsIcon.png"));//ALTERAR O DIRET�RIO
 		devOpsImage.setBounds(195, 338, 55, 38);
 		add(devOpsImage);
 		
@@ -122,7 +122,7 @@ public class TrabalhoQuiz extends JPanel{
 		add(Divisor4);
 		
 		JLabel questionLabel3 = new JLabel("4-Qual o significa a sigla 'PC'?");
-		questionLabel3.setBounds(144, 420, 165, 14);
+		questionLabel3.setBounds(144, 420, 170, 14);
 		add(questionLabel3);
 		
 		Q4O1 = new JRadioButton("Personal Computer");
@@ -154,12 +154,12 @@ public class TrabalhoQuiz extends JPanel{
 		question4.add(Q5O2);
 		
 		JLabel PCImage = new JLabel("");
-		PCImage.setIcon(new ImageIcon("C:/Users/FelipeTT/Desktop/Java/Images/PC.png"));//ALTERAR O DIRET�RIO
+		PCImage.setIcon(new ImageIcon("Images/PC.png"));//ALTERAR O DIRET�RIO
 		PCImage.setBounds(190, 434, 45, 36);
 		add(PCImage);
 		
 		JLabel bookImage = new JLabel("");
-		bookImage.setIcon(new ImageIcon("C:/Users/FelipeTT/Desktop/Java/Images/Book.png"));//ALTERAR O DIRET�RIO
+		bookImage.setIcon(new ImageIcon("Images/Book.png"));//ALTERAR O DIRET�RIO
 		bookImage.setBounds(195, 534, 53, 38);
 		add(bookImage);
 		

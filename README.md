@@ -1,13 +1,9 @@
 # Java - Graphical-Interface
 
-## Interface Gráfica
+- Quiz - JFrame Computer Quiz
 
-- Quiz - JFrame Quiz
+- Maki_Sushi - JFrame Purchase System
 
-- ProgressCar - JFrame Barra de Progresso
-
-- Maki_Sushinho - JFrame Sistema de seleção de itens
-
-- AverageCalculator - Calculador de média escolar
+- Calculator - School average Calculator
 
 - Adventure Game - Java Graphics 2D Adventure Game Development 
