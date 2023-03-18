@@ -27,7 +27,7 @@ public class Boss {
 		x = 690;
 		y = 441;
 		
-		new RectangleBox();
+		new Player();
 		
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new ScheduleTask(), 2000, 500);
@@ -72,16 +72,16 @@ public class Boss {
 				if(getY() > 483) {
 					dy = -20;
 				}
-				if(RectangleBox.x < getX()) {
+				if(Player.x < getX()) {
 					dx = -23;
 				}
-				if(RectangleBox.y < getY()) {
+				if(Player.y < getY()) {
 					dy = -23;
 				}
-				if(RectangleBox.x > getX()) {
+				if(Player.x > getX()) {
 					dx = 23;
 				}
-				if(RectangleBox.y > getY()) {
+				if(Player.y > getY()) {
 					dy = 23;
 				}
 				x += dx;

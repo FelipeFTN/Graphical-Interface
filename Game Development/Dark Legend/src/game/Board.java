@@ -20,7 +20,7 @@ import game.models.Chests;
 import game.models.ColliderBox;
 import game.models.Door;
 import game.models.Lever;
-import game.models.RectangleBox;
+import game.models.Player;
 import game.models.Scene;
 
 public class Board extends JPanel implements ActionListener, Runnable{			//Arquivo onde acontece todas as acoes do jogo
@@ -28,7 +28,7 @@ public class Board extends JPanel implements ActionListener, Runnable{			//Arqui
 	//Criacao da variaveis
 	private Timer timer;
 	private Boss boss;
-	public RectangleBox box;
+	public Player box;
 	public Rectangle playerHitBox;
 	private Rectangle leverHitBox;
 	private Rectangle chestHitBox, chestHitBox1;
@@ -68,7 +68,7 @@ public class Board extends JPanel implements ActionListener, Runnable{			//Arqui
 																		//Instanciando um monte de coisas
 		boss = new Boss();												//Inimigo
 		scene = new Scene();											//Cenario
-		box = new RectangleBox();										//Player
+		box = new Player();										//Player
 		lever = new Lever();											//Alavanca
 		chest = new Chests();											//Baus
 		door = new Door();												//Porta
@@ -173,16 +173,16 @@ public class Board extends JPanel implements ActionListener, Runnable{			//Arqui
 			r2 = hitBox.getBounds();
 			if(playerHitBox.intersects(r2)) {							//Sistema de colisao (bugado)
 				collided = true;
-				if(RectangleBox.lastMove == "UP") {
+				if(Player.lastMove == "UP") {
 					playerHitBox = box.getBounds(box.getX(), box.getY() + 2);
 				}
-				if(RectangleBox.lastMove == "DOWN") {
+				if(Player.lastMove == "DOWN") {
 					playerHitBox = box.getBounds(box.getX(), box.getY() - 2);
 				}
-				if(RectangleBox.lastMove == "LEFT") {
+				if(Player.lastMove == "LEFT") {
 					playerHitBox = box.getBounds(box.getX() + 2, box.getY());
 				}
-				if(RectangleBox.lastMove == "RIGHT") {
+				if(Player.lastMove == "RIGHT") {
 					playerHitBox = box.getBounds(box.getX() - 2, box.getY());
 				}
 			}else {
@@ -200,13 +200,13 @@ public class Board extends JPanel implements ActionListener, Runnable{			//Arqui
 		}
 		
 		if(playerHitBox.intersects(doorHitBox)) {
-			if(RectangleBox.lastMove == "UP") {
+			if(Player.lastMove == "UP") {
 				playerHitBox = box.getBounds(box.getX(), box.getY() + 2);
 				door.useDoor(Chests.openChest);
 			}
 		}
 		if(playerHitBox.intersects(bossDoorHitBox) && !Lever.leverActive) {
-			if(RectangleBox.lastMove == "RIGHT") {
+			if(Player.lastMove == "RIGHT") {
 				playerHitBox = box.getBounds(box.getX() -2, box.getY());
 			}
 		}

@@ -6,10 +6,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-public class RectangleBox extends JPanel{ 				//Este aqui Controla o Player
-	/**
-	 * 
-	 */
+// Player handler
+public class Player extends JPanel{
 	private static final long serialVersionUID = 1L;
 	private Image image;
 	static int x;
@@ -20,67 +18,66 @@ public class RectangleBox extends JPanel{ 				//Este aqui Controla o Player
 	private int h;
 	private int initX = 125;
 	private int initY = 50;
+
 	public static String lastMove;
-	public RectangleBox() {
+	public Player() {
 		playerImage();
 		resetState();
 	}
-	public void playerImage() {							//Cria a imagem do Player
-		ImageIcon ii = new ImageIcon(RectangleBox.class.getResource("/PlayerResized.png"));
+
+  // Creates player image
+	public void playerImage() {
+		ImageIcon ii = new ImageIcon(Player.class.getResource("/PlayerResized.png"));
 		image = ii.getImage();
 		w = 50;
 		h = 72;
 	}
-	public void boxMove() {								//Movimentos do Player
+
+  // Player movements
+	public void boxMove() {
 		x += dx;
 		y += dy;
 	}
 	
-	public void collided(boolean collided) {
-	}
-	//Controles
-	public void keyPressed(KeyEvent e) {				//Se as teclas Setinhas forem apertadas, ele movimenta o player
+	// Controlls
+	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		if(key == java.awt.event.KeyEvent.VK_UP) {
 			lastMove = "UP";
 			dy = -2;
-		}
-		if(key == java.awt.event.KeyEvent.VK_DOWN) {
+		} else if(key == java.awt.event.KeyEvent.VK_DOWN) {
 			lastMove = "DOWN";
 			dy = 2;
-		}
-		if(key == java.awt.event.KeyEvent.VK_LEFT) {
+		} else if(key == java.awt.event.KeyEvent.VK_LEFT) {
 			lastMove = "LEFT";
 			dx = -2;				
-		}
-		if(key == java.awt.event.KeyEvent.VK_RIGHT) {
+		} else if(key == java.awt.event.KeyEvent.VK_RIGHT) {
 			lastMove = "RIGHT";
 			dx = 2;			
 		}
 	}
-	public void keyReleased(KeyEvent e) {			//Se as teclas Setinhas forem soltas ele para o player
+
+  // Stops player if key is up
+	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 		
 		if(key == java.awt.event.KeyEvent.VK_UP) {
 			dy = 0;
-		}
-		if(key == java.awt.event.KeyEvent.VK_DOWN) {
+		} else if(key == java.awt.event.KeyEvent.VK_DOWN) {
 			dy = 0;
-		}
-		if(key == java.awt.event.KeyEvent.VK_LEFT) {
+		} else if(key == java.awt.event.KeyEvent.VK_LEFT) {
 			dx = 0;
-		}
-		if(key == java.awt.event.KeyEvent.VK_RIGHT) {
+		} else if(key == java.awt.event.KeyEvent.VK_RIGHT) {
 			dx = 0;
 		}
 	}
-	private void resetState() {					//Isso aqui faz o player iniciar numa determinada posicao
+  // Player starts at a initial position
+	private void resetState() {
 		x = initX;
 		y = initY;
 	}
 	
-	//Metodos get
-	
+	// Get Methods
 	public Image getImage() {
 		return image;
 	}
@@ -96,9 +93,11 @@ public class RectangleBox extends JPanel{ 				//Este aqui Controla o Player
 	public int getHeight() {
 		return h;
 	}
+
+  // Get collision box
 	public Rectangle getBounds(int x, int y) {
-		RectangleBox.x = x;
-		RectangleBox.y = y;
+		Player.x = x;
+		Player.y = y;
 		return new Rectangle(x, y, w, h);
 	}
 }
