@@ -8,7 +8,7 @@ public class Window extends JFrame {
 
 	public Window() {
 		add(new Board());
-		setTitle("Adventure Game");
+		setTitle("DarkLegend");
 		ImageIcon logo = new ImageIcon(getClass().getResource("/Logo.png"));
 		setIconImage(logo.getImage());
 		setSize(335, 350);
