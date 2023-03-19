@@ -1,5 +1,5 @@
+./src/game/Main.java
 ./src/game/Board.java
-./src/game/Window.java
 ./src/game/BD.java
 ./src/game/models/Scene.java
 ./src/game/models/Chests.java

@@ -34,7 +34,7 @@ public class Boss {
 	}
 		
 	private void bossImage() {									//Cria a imagem do Boss
-		ImageIcon ii = new ImageIcon(Boss.class.getResource("/BossResized.png"));
+		ImageIcon ii = new ImageIcon(getClass().getResource("/BossResized.png"));
 		image = ii.getImage();
 		w = 50;
 		h = 75;

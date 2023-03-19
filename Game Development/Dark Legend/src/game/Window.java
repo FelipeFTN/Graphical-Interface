@@ -3,11 +3,13 @@ package game;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-public class Main extends JFrame {
-	public Main() {
+public class Window extends JFrame {
+	private static final long serialVersionUID = 1L;
+
+	public Window() {
 		add(new Board());
 		setTitle("Adventure Game");
-		ImageIcon logo = new ImageIcon(Main.class.getResource("/Logo.png"));
+		ImageIcon logo = new ImageIcon(getClass().getResource("/Logo.png"));
 		setIconImage(logo.getImage());
 		setSize(335, 350);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -16,7 +18,7 @@ public class Main extends JFrame {
 	}
 	
 	public static void main(String[] args)	{		
-		Main m = new Main();
-		m.setVisible(true);
+		Window w = new Window();
+		w.setVisible(true);
 	}
 }

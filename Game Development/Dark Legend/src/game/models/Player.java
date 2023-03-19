@@ -63,11 +63,14 @@ public class Player extends JPanel{
 		
 		if(key == java.awt.event.KeyEvent.VK_UP) {
 			dy = 0;
-		} else if(key == java.awt.event.KeyEvent.VK_DOWN) {
+		}
+		if(key == java.awt.event.KeyEvent.VK_DOWN) {
 			dy = 0;
-		} else if(key == java.awt.event.KeyEvent.VK_LEFT) {
+		}
+		if(key == java.awt.event.KeyEvent.VK_LEFT) {
 			dx = 0;
-		} else if(key == java.awt.event.KeyEvent.VK_RIGHT) {
+		}
+		if(key == java.awt.event.KeyEvent.VK_RIGHT) {
 			dx = 0;
 		}
 	}

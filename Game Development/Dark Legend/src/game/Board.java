@@ -175,14 +175,11 @@ public class Board extends JPanel implements ActionListener, Runnable{			//Arqui
 				collided = true;
 				if(Player.lastMove == "UP") {
 					playerHitBox = box.getBounds(box.getX(), box.getY() + 2);
-				}
-				if(Player.lastMove == "DOWN") {
+				} else if(Player.lastMove == "DOWN") {
 					playerHitBox = box.getBounds(box.getX(), box.getY() - 2);
-				}
-				if(Player.lastMove == "LEFT") {
+				} else if(Player.lastMove == "LEFT") {
 					playerHitBox = box.getBounds(box.getX() + 2, box.getY());
-				}
-				if(Player.lastMove == "RIGHT") {
+				} else if(Player.lastMove == "RIGHT") {
 					playerHitBox = box.getBounds(box.getX() - 2, box.getY());
 				}
 			}else {
